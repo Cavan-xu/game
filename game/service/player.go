@@ -1,21 +1,29 @@
 package service
 
-import "context"
+import (
+	"context"
+	"time"
+
+	"github.com/Cavan-xu/van/vnet"
+)
 
 type Player struct {
-	ctx    context.Context
-	cancel context.CancelFunc
-
-	roleId  int32
-	level   int32
-	account string
-	name    string
-
-	isDataLoad bool
+	ctx            context.Context
+	cancel         context.CancelFunc
+	roleId         int32
+	level          int32
+	account        string
+	name           string
+	isOnline       bool
+	isDataLoad     bool
+	loginTime      time.Time
+	lastActiveTime time.Time
+	connection     vnet.IConnection
 }
 
 func (p *Player) Init() {
 	p.ctx, p.cancel = context.WithCancel(context.TODO())
+
 }
 
 func (p *Player) IsDataLoad() bool {
@@ -40,6 +48,10 @@ func (p *Player) GetName() string {
 
 func (p *Player) GetLevel() int32 {
 	return p.level
+}
+
+func (p *Player) GetLastActiveTime() time.Time {
+	return p.lastActiveTime
 }
 
 func (p *Player) Cancel() {

@@ -1,6 +1,9 @@
 package service
 
-import "sync"
+import (
+	"sync"
+	"time"
+)
 
 const (
 	PlayerMgrCount = 64
@@ -26,6 +29,11 @@ func GetPlayer(roleId int32) *Player {
 func CreatePlayer(roleId int32) *Player {
 	mgr := playerMgrArr[roleId%PlayerMgrCount]
 	return mgr.create(roleId)
+}
+
+func CheckOffLine(tick int32) {
+	mgr := playerMgrArr[tick%PlayerMgrCount]
+	mgr.checkOffLine()
 }
 
 type PlayerMgr struct {
@@ -54,4 +62,21 @@ func (mgr *PlayerMgr) create(roleId int32) *Player {
 	p.Init()
 	mgr.playerMap[roleId] = p
 	return p
+}
+
+func (mgr *PlayerMgr) checkOffLine() {
+	mgr.RLock()
+	defer mgr.RUnlock()
+
+	// 最大不活跃时间五分钟
+	maxUnActiveTime := 300
+	curTime := time.Now().Unix()
+	for _, p := range mgr.playerMap {
+		lastActiveTime := p.GetLastActiveTime().Unix()
+		if int(curTime-lastActiveTime) >= maxUnActiveTime {
+			// 关闭连接等动作
+			delete(mgr.playerMap, p.GetRoleId())
+		}
+	}
+
 }
