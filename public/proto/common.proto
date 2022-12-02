@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package rpc;
+option go_package = "rpc";
+
+enum MsgId {
+  Invalid = 0;
+
+  // client <> game
+  CToG_RoleLogin = 1; //[(req) = "RoleLoginReq", (ack) = "RoleLoginAck", (desc) = "玩家登录"]
+}
+
+enum ResultId {
+  ResultIdInvalid = 0;
+
+  Success = 1;        // 成功
+  RoleNotExist = 2;   // 玩家不存在
+  System = 3;         // 系统错误
+  InvalidParams = 4;  // 参数错误
+  Fail = 5;           // 请求失败
+  ViolateWord = 6;    // 违规词语
+  SystemBusy = 7;     // 系统忙
+}

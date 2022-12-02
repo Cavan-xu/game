@@ -1,0 +1,12 @@
+{
+  "ip": "127.0.0.1",
+  "port": 12310,
+  "server_name": "server",
+  "network": "tcp",
+  "read_buffer": 2048,
+  "write_buffer": 2048,
+  "log": {
+    "file_name": "server.log",
+    "log_level": 0
+  }
+}

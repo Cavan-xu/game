@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package rpc;
+option go_package = "rpc";
+
+message FailAck {
+  ResultId ResultId = 1;
+  string ErrMsg = 2;
+}
+
+message RoleLoginReq {
+  int32 RoleId = 1;
+  string Account = 2;
+}
+
+message RoleLoginAck {
+  ResultId ResultId = 1;
+  string ErrMsg = 2;
+
+  int32 RoleId = 3;
+  string Account = 4;
+  string Name = 5;
+  int32 Level = 6;
+  bool HasCreateRole = 7; // 是否创角
+}
