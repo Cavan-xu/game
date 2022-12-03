@@ -27,6 +27,7 @@ func main() {
 	}
 
 	server.AddRouter(router.NewLoginRouter())
+	server.AddRouter(router.NewRegisterRouter())
 	go func() {
 		if err = server.Server(); err != nil {
 			panic(err)

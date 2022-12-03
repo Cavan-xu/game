@@ -1,13 +1,14 @@
 syntax = "proto3";
 
 package rpc;
-option go_package = "rpc";
+option go_package = "rpc/";
 
 enum MsgId {
   Invalid = 0;
 
   // client <> game
   CToG_RoleLogin = 1; //[(req) = "RoleLoginReq", (ack) = "RoleLoginAck", (desc) = "玩家登录"]
+  CToG_RoleRegister = 2;//[(req) = "RoleRegisterReq", (ack) = "RoleLoginAck", (desc) = "玩家注册"]
 }
 
 enum ResultId {

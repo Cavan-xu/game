@@ -3,7 +3,7 @@ syntax = "proto3";
 import "common.proto";
 
 package rpc;
-option go_package = "rpc";
+option go_package = "rpc/";
 
 message FailAck {
   ResultId ResultId = 1;
@@ -24,4 +24,11 @@ message RoleLoginAck {
   string Name = 5;
   int32 Level = 6;
   bool HasCreateRole = 7; // 是否创角
+}
+
+message RoleRegisterReq {
+  int32 RoleId = 1;
+  string Account = 2;
+  string Name = 3;
+  int32 Gender = 4;
 }

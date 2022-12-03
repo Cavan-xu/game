@@ -2,9 +2,13 @@ package service
 
 import (
 	"context"
+	"errors"
+	"gameserver/game/model"
+	"gameserver/public/db"
 	"time"
 
 	"github.com/Cavan-xu/van/vnet"
+	"gorm.io/gorm"
 )
 
 type Player struct {
@@ -23,15 +27,33 @@ type Player struct {
 
 func (p *Player) Init() {
 	p.ctx, p.cancel = context.WithCancel(context.TODO())
-
 }
 
 func (p *Player) IsDataLoad() bool {
 	return p.isDataLoad
 }
 
+func (p *Player) CreateData(roleId, gender int32, account, name string) error {
+	playerData := model.NewPlayerData(roleId, gender, account, name)
+	if err := db.GetGameDB().Table(playerData.GetTableName()).Create(p).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (p *Player) LoadData() (bool, error) {
-	return true, nil
+	playerData := &model.PlayerData{RoleId: p.roleId}
+	err := db.GetGameDB().Table(playerData.GetTableName()).First(p).Error
+	if err == nil {
+		return true, nil
+	}
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return false, nil
+	}
+
+	return false, err
+
 }
 
 func (p *Player) GetRoleId() int32 {
