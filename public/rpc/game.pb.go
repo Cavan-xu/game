@@ -20,6 +20,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type EMail_Status int32
+
+const (
+	EMail_StatusNotRead       EMail_Status = 0
+	EMail_StatusReceiveReward EMail_Status = 1
+)
+
+// Enum value maps for EMail_Status.
+var (
+	EMail_Status_name = map[int32]string{
+		0: "StatusNotRead",
+		1: "StatusReceiveReward",
+	}
+	EMail_Status_value = map[string]int32{
+		"StatusNotRead":       0,
+		"StatusReceiveReward": 1,
+	}
+)
+
+func (x EMail_Status) Enum() *EMail_Status {
+	p := new(EMail_Status)
+	*p = x
+	return p
+}
+
+func (x EMail_Status) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (EMail_Status) Descriptor() protoreflect.EnumDescriptor {
+	return file_game_proto_enumTypes[0].Descriptor()
+}
+
+func (EMail_Status) Type() protoreflect.EnumType {
+	return &file_game_proto_enumTypes[0]
+}
+
+func (x EMail_Status) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use EMail_Status.Descriptor instead.
+func (EMail_Status) EnumDescriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{5, 0}
+}
+
 type FailAck struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -296,6 +342,241 @@ func (x *RoleRegisterReq) GetGender() int32 {
 	return 0
 }
 
+type ItemInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ItemId      int32 `protobuf:"varint,1,opt,name=ItemId,proto3" json:"ItemId,omitempty"`
+	Count       int32 `protobuf:"varint,2,opt,name=Count,proto3" json:"Count,omitempty"`
+	ReceiveTime int64 `protobuf:"varint,3,opt,name=ReceiveTime,proto3" json:"ReceiveTime,omitempty"`
+}
+
+func (x *ItemInfo) Reset() {
+	*x = ItemInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ItemInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ItemInfo) ProtoMessage() {}
+
+func (x *ItemInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_game_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ItemInfo.ProtoReflect.Descriptor instead.
+func (*ItemInfo) Descriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ItemInfo) GetItemId() int32 {
+	if x != nil {
+		return x.ItemId
+	}
+	return 0
+}
+
+func (x *ItemInfo) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *ItemInfo) GetReceiveTime() int64 {
+	if x != nil {
+		return x.ReceiveTime
+	}
+	return 0
+}
+
+type EMail struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *EMail) Reset() {
+	*x = EMail{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EMail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EMail) ProtoMessage() {}
+
+func (x *EMail) ProtoReflect() protoreflect.Message {
+	mi := &file_game_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EMail.ProtoReflect.Descriptor instead.
+func (*EMail) Descriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{5}
+}
+
+type MailInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MailId      int64        `protobuf:"varint,1,opt,name=MailId,proto3" json:"MailId,omitempty"`
+	Status      EMail_Status `protobuf:"varint,2,opt,name=Status,proto3,enum=rpc.EMail_Status" json:"Status,omitempty"` // 邮件状态
+	ItemInfos   []*ItemInfo  `protobuf:"bytes,3,rep,name=ItemInfos,proto3" json:"ItemInfos,omitempty"`                  // 奖励
+	Content     string       `protobuf:"bytes,4,opt,name=Content,proto3" json:"Content,omitempty"`
+	ReceiveTime int64        `protobuf:"varint,5,opt,name=ReceiveTime,proto3" json:"ReceiveTime,omitempty"`
+}
+
+func (x *MailInfo) Reset() {
+	*x = MailInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MailInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MailInfo) ProtoMessage() {}
+
+func (x *MailInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_game_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MailInfo.ProtoReflect.Descriptor instead.
+func (*MailInfo) Descriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MailInfo) GetMailId() int64 {
+	if x != nil {
+		return x.MailId
+	}
+	return 0
+}
+
+func (x *MailInfo) GetStatus() EMail_Status {
+	if x != nil {
+		return x.Status
+	}
+	return EMail_StatusNotRead
+}
+
+func (x *MailInfo) GetItemInfos() []*ItemInfo {
+	if x != nil {
+		return x.ItemInfos
+	}
+	return nil
+}
+
+func (x *MailInfo) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *MailInfo) GetReceiveTime() int64 {
+	if x != nil {
+		return x.ReceiveTime
+	}
+	return 0
+}
+
+type MailData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MailInfos    []*MailInfo `protobuf:"bytes,1,rep,name=MailInfos,proto3" json:"MailInfos,omitempty"`
+	SystemMailId []int64     `protobuf:"varint,2,rep,packed,name=SystemMailId,proto3" json:"SystemMailId,omitempty"` // 收到的所有系统邮件的id集合
+}
+
+func (x *MailData) Reset() {
+	*x = MailData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MailData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MailData) ProtoMessage() {}
+
+func (x *MailData) ProtoReflect() protoreflect.Message {
+	mi := &file_game_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MailData.ProtoReflect.Descriptor instead.
+func (*MailData) Descriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *MailData) GetMailInfos() []*MailInfo {
+	if x != nil {
+		return x.MailInfos
+	}
+	return nil
+}
+
+func (x *MailData) GetSystemMailId() []int64 {
+	if x != nil {
+		return x.SystemMailId
+	}
+	return nil
+}
+
 var File_game_proto protoreflect.FileDescriptor
 
 var file_game_proto_rawDesc = []byte{
@@ -330,8 +611,35 @@ var file_game_proto_rawDesc = []byte{
 	0x09, 0x52, 0x07, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x4e, 0x61,
 	0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16,
 	0x0a, 0x06, 0x47, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06,
-	0x47, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x42, 0x06, 0x5a, 0x04, 0x72, 0x70, 0x63, 0x2f, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x47, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x22, 0x5a, 0x0a, 0x08, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x6e,
+	0x66, 0x6f, 0x12, 0x16, 0x0a, 0x06, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x43, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x43, 0x6f, 0x75, 0x6e, 0x74,
+	0x12, 0x20, 0x0a, 0x0b, 0x52, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x52, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x54, 0x69,
+	0x6d, 0x65, 0x22, 0x3d, 0x0a, 0x05, 0x45, 0x4d, 0x61, 0x69, 0x6c, 0x22, 0x34, 0x0a, 0x06, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x11, 0x0a, 0x0d, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x4e,
+	0x6f, 0x74, 0x52, 0x65, 0x61, 0x64, 0x10, 0x00, 0x12, 0x17, 0x0a, 0x13, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x52, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x10,
+	0x01, 0x22, 0xb6, 0x01, 0x0a, 0x08, 0x4d, 0x61, 0x69, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x16,
+	0x0a, 0x06, 0x4d, 0x61, 0x69, 0x6c, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06,
+	0x4d, 0x61, 0x69, 0x6c, 0x49, 0x64, 0x12, 0x29, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x11, 0x2e, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x4d, 0x61,
+	0x69, 0x6c, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x12, 0x2b, 0x0a, 0x09, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x03,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x74, 0x65, 0x6d, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x09, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x18,
+	0x0a, 0x07, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x52, 0x65, 0x63, 0x65,
+	0x69, 0x76, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x52,
+	0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x5b, 0x0a, 0x08, 0x4d, 0x61,
+	0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2b, 0x0a, 0x09, 0x4d, 0x61, 0x69, 0x6c, 0x49, 0x6e,
+	0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x72, 0x70, 0x63, 0x2e,
+	0x4d, 0x61, 0x69, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x09, 0x4d, 0x61, 0x69, 0x6c, 0x49, 0x6e,
+	0x66, 0x6f, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x61, 0x69,
+	0x6c, 0x49, 0x64, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x53, 0x79, 0x73, 0x74, 0x65,
+	0x6d, 0x4d, 0x61, 0x69, 0x6c, 0x49, 0x64, 0x42, 0x06, 0x5a, 0x04, 0x72, 0x70, 0x63, 0x2f, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -346,22 +654,31 @@ func file_game_proto_rawDescGZIP() []byte {
 	return file_game_proto_rawDescData
 }
 
-var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_game_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_game_proto_goTypes = []interface{}{
-	(*FailAck)(nil),         // 0: rpc.FailAck
-	(*RoleLoginReq)(nil),    // 1: rpc.RoleLoginReq
-	(*RoleLoginAck)(nil),    // 2: rpc.RoleLoginAck
-	(*RoleRegisterReq)(nil), // 3: rpc.RoleRegisterReq
-	(ResultId)(0),           // 4: rpc.ResultId
+	(EMail_Status)(0),       // 0: rpc.EMail.Status
+	(*FailAck)(nil),         // 1: rpc.FailAck
+	(*RoleLoginReq)(nil),    // 2: rpc.RoleLoginReq
+	(*RoleLoginAck)(nil),    // 3: rpc.RoleLoginAck
+	(*RoleRegisterReq)(nil), // 4: rpc.RoleRegisterReq
+	(*ItemInfo)(nil),        // 5: rpc.ItemInfo
+	(*EMail)(nil),           // 6: rpc.EMail
+	(*MailInfo)(nil),        // 7: rpc.MailInfo
+	(*MailData)(nil),        // 8: rpc.MailData
+	(ResultId)(0),           // 9: rpc.ResultId
 }
 var file_game_proto_depIdxs = []int32{
-	4, // 0: rpc.FailAck.ResultId:type_name -> rpc.ResultId
-	4, // 1: rpc.RoleLoginAck.ResultId:type_name -> rpc.ResultId
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	9, // 0: rpc.FailAck.ResultId:type_name -> rpc.ResultId
+	9, // 1: rpc.RoleLoginAck.ResultId:type_name -> rpc.ResultId
+	0, // 2: rpc.MailInfo.Status:type_name -> rpc.EMail.Status
+	5, // 3: rpc.MailInfo.ItemInfos:type_name -> rpc.ItemInfo
+	7, // 4: rpc.MailData.MailInfos:type_name -> rpc.MailInfo
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_game_proto_init() }
@@ -419,19 +736,68 @@ func file_game_proto_init() {
 				return nil
 			}
 		}
+		file_game_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ItemInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EMail); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MailInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MailData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_game_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      1,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_game_proto_goTypes,
 		DependencyIndexes: file_game_proto_depIdxs,
+		EnumInfos:         file_game_proto_enumTypes,
 		MessageInfos:      file_game_proto_msgTypes,
 	}.Build()
 	File_game_proto = out.File

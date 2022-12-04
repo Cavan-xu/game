@@ -32,3 +32,29 @@ message RoleRegisterReq {
   string Name = 3;
   int32 Gender = 4;
 }
+
+message ItemInfo {
+  int32 ItemId = 1;
+  int32 Count = 2;
+  int64 ReceiveTime = 3;
+}
+
+message EMail {
+  enum Status {
+    StatusNotRead = 0;
+    StatusReceiveReward = 1;
+  }
+}
+
+message MailInfo {
+  int64 MailId = 1;
+  EMail.Status Status = 2;          // 邮件状态
+  repeated ItemInfo ItemInfos = 3;  // 奖励
+  string Content = 4;
+  int64 ReceiveTime = 5;
+}
+
+message MailData {
+  repeated MailInfo MailInfos = 1;
+  repeated int64 SystemMailId = 2;  // 收到的所有系统邮件的id集合
+}

@@ -23,6 +23,8 @@ type Player struct {
 	loginTime      time.Time
 	lastActiveTime time.Time
 	connection     vnet.IConnection
+
+	MailRecord *model.MailRecord
 }
 
 func (p *Player) Init() {
@@ -45,15 +47,27 @@ func (p *Player) CreateData(roleId, gender int32, account, name string) error {
 func (p *Player) LoadData() (bool, error) {
 	playerData := &model.PlayerData{RoleId: p.roleId}
 	err := db.GetGameDB().Table(playerData.GetTableName()).First(p).Error
-	if err == nil {
-		return true, nil
-	}
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return false, nil
 	}
+	if err != nil {
+		return false, err
+	}
+	if err = p.LoadRecord(playerData); err != nil {
+		return false, err
+	}
 
-	return false, err
+	return true, nil
+}
 
+func (p *Player) LoadRecord(playerData *model.PlayerData) error {
+	mailRecord := model.NewMailRecord()
+	if err := mailRecord.Unmarshal(playerData.MailData); err != nil {
+		return err
+	}
+	p.MailRecord = mailRecord
+
+	return nil
 }
 
 func (p *Player) GetRoleId() int32 {

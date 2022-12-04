@@ -9,10 +9,11 @@ var (
 )
 
 type PlayerData struct {
-	RoleId  int32  `xorm:"not null pk int"`
-	Account string `xorm:"not null varchar(50)"`
-	Name    string `xorm:"not null varchar(30)"`
-	Gender  int32  `xorm:"not null int(1)"`
+	RoleId   int32  `xorm:"not null pk int"`
+	Account  string `xorm:"not null varchar(50)"`
+	Name     string `xorm:"not null varchar(30)"`
+	Gender   int32  `xorm:"not null int(1)"`
+	MailData []byte `xorm:"blob"`
 }
 
 func NewPlayerData(roleId, gender int32, account, name string) *PlayerData {
