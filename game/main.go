@@ -28,6 +28,8 @@ func main() {
 
 	server.AddRouter(router.NewLoginRouter())
 	server.AddRouter(router.NewRegisterRouter())
+	server.AddRouter(router.NewHeartBeatRouter())
+	server.AddRouter(router.NewMailRouter())
 	go func() {
 		if err = server.Server(); err != nil {
 			panic(err)

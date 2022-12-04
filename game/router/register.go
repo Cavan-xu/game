@@ -54,6 +54,7 @@ func (r *RegisterRouter) Handle(request vnet.IRequest) {
 		Name:          p.GetName(),
 		Level:         p.GetLevel(),
 		HasCreateRole: true,
+		MailInfos:     p.MailRecord.GetAll(),
 	}
 	r.SendMsgToClient(request, ack)
 }

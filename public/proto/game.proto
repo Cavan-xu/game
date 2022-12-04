@@ -23,7 +23,8 @@ message RoleLoginAck {
   string Account = 4;
   string Name = 5;
   int32 Level = 6;
-  bool HasCreateRole = 7; // 是否创角
+  bool HasCreateRole = 7;           // 是否创角
+  repeated MailInfo MailInfos = 8;  // 邮件
 }
 
 message RoleRegisterReq {
@@ -44,17 +45,62 @@ message EMail {
     StatusNotRead = 0;
     StatusReceiveReward = 1;
   }
+  enum ReceiveType {
+    ReceiveTypeSingle = 0;
+    ReceiveTypeAll = 1;
+  }
 }
 
 message MailInfo {
   int64 MailId = 1;
   EMail.Status Status = 2;          // 邮件状态
   repeated ItemInfo ItemInfos = 3;  // 奖励
-  string Content = 4;
-  int64 ReceiveTime = 5;
+  string Title = 4;
+  string Content = 5;
+  int64 ReceiveTime = 6;
+  int64 ExpireTime = 7;             // 过期时间
+}
+
+message SystemMail {
+  int32 SystemMailId = 1;
+  string Title = 2;
+  string Content = 3;
+  repeated ItemInfo ItemInfos = 4;
+  int64 SendTime = 5;
+  int64 ExpireTime = 6;
 }
 
 message MailData {
   repeated MailInfo MailInfos = 1;
-  repeated int64 SystemMailId = 2;  // 收到的所有系统邮件的id集合
+  repeated int32 SystemMailId = 2;  // 收到的所有系统邮件的id集合
+}
+
+message ReceiveMailRewardReq {
+  int32 RoleId = 1;
+  int64 MailId = 2; // 一键领取时候不用传
+  EMail.ReceiveType ReceiveTYpe = 3;
+}
+
+message ReceiveMailRewardAck {
+  ResultId ResultId = 1;
+  string ErrMsg = 2;
+
+  repeated ItemInfo ItemInfos = 3;
+}
+
+message RoleMailNtf {
+  int32 RoleId = 1;
+  repeated MailInfo MailInfos = 2;
+}
+
+// 心跳包
+message HeartBeatReq {
+  int32 RoleId = 1;
+}
+
+message HeatBeatAck {
+  ResultId ResultId = 1;
+  string ErrMsg = 2;
+  int32 RoleId = 3;
+  int64 TimeStamp = 4;
 }

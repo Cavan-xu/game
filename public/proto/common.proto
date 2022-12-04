@@ -7,8 +7,13 @@ enum MsgId {
   Invalid = 0;
 
   // client <> game
-  CToG_RoleLogin = 1; //[(req) = "RoleLoginReq", (ack) = "RoleLoginAck", (desc) = "玩家登录"]
-  CToG_RoleRegister = 2;//[(req) = "RoleRegisterReq", (ack) = "RoleLoginAck", (desc) = "玩家注册"]
+  CToG_RoleLogin = 1;         //[(req) = "RoleLoginReq", (ack) = "RoleLoginAck", (desc) = "玩家登录"]
+  CToG_RoleRegister = 2;      //[(req) = "RoleRegisterReq", (ack) = "RoleLoginAck", (desc) = "玩家注册"]
+  CToG_HeartBeat = 3;         //[(req) = "HeartBeatReq", (ack) = "HeartBeatAck", (desc) = "玩家心跳包"]
+  CToG_ReceiveMailReward = 4; //[(req) = "HeartBeatReq", (ack) = "HeartBeatAck", (desc) = "玩家心跳包"]
+
+  // game > client
+  GToC_RoleMailNtf = 5;       //[(req) = "RoleMailNtf", (ack) = "", (desc) = "玩家邮件通知"]
 }
 
 enum ResultId {

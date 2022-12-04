@@ -5,6 +5,7 @@ import (
 	"errors"
 	"gameserver/game/model"
 	"gameserver/public/db"
+	"gameserver/public/rpc"
 	"time"
 
 	"github.com/Cavan-xu/van/vnet"
@@ -21,10 +22,10 @@ type Player struct {
 	isOnline       bool
 	isDataLoad     bool
 	loginTime      time.Time
+	curTime        time.Time
 	lastActiveTime time.Time
 	connection     vnet.IConnection
-
-	MailRecord *model.MailRecord
+	MailRecord     *model.MailRecord
 }
 
 func (p *Player) Init() {
@@ -92,4 +93,28 @@ func (p *Player) GetLastActiveTime() time.Time {
 
 func (p *Player) Cancel() {
 	p.cancel()
+}
+
+func (p *Player) CheckRoleMails() {
+	systemMails := GetSystemMails()
+	for _, systemMail := range systemMails {
+		if systemMail.SendTime > p.curTime.Unix() {
+			continue
+		}
+		if systemMail.ExpireTime < p.curTime.Unix() {
+			continue
+		}
+		if p.MailRecord.HasReceiveSystemMail(systemMail.SystemMailId) {
+			continue
+		}
+		mail := &rpc.MailInfo{
+			Status:      rpc.EMail_StatusNotRead,
+			ItemInfos:   systemMail.ItemInfos,
+			Title:       systemMail.Title,
+			Content:     systemMail.Content,
+			ReceiveTime: systemMail.SendTime,
+			ExpireTime:  systemMail.ExpireTime,
+		}
+		p.MailRecord.Add(mail)
+	}
 }
