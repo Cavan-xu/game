@@ -52,9 +52,21 @@ func (r *MailRouter) Handle(request vnet.IRequest) {
 	if len(mailIds) > 0 {
 		NotifyRoleMails(p, mailIds)
 	}
-
 }
 
 func NotifyRoleMails(p *service.Player, mailIds []int64) {
-
+	ntf := &rpc.RoleMailNtf{
+		RoleId: p.GetRoleId(),
+	}
+	for _, mailId := range mailIds {
+		mail := p.MailRecord.Get(mailId)
+		if mail == nil {
+			mail = &rpc.MailInfo{
+				MailId: mailId,
+				Status: rpc.EMail_StatusDeleted,
+			}
+		}
+		ntf.MailInfos = append(ntf.MailInfos, mail)
+	}
+	p.SendMessageToClient(rpc.MsgId_GToC_RoleMailNtf, ntf)
 }

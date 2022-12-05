@@ -13,7 +13,7 @@ enum MsgId {
   CToG_ReceiveMailReward = 4; //[(req) = "HeartBeatReq", (ack) = "HeartBeatAck", (desc) = "玩家心跳包"]
 
   // game > client
-  GToC_RoleMailNtf = 5;       //[(req) = "RoleMailNtf", (ack) = "", (desc) = "玩家邮件通知"]
+  GToC_RoleMailNtf = 1000;       //[(req) = "RoleMailNtf", (ack) = "", (desc) = "玩家邮件通知"]
 }
 
 enum ResultId {

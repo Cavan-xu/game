@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/Cavan-xu/van/vnet"
+	"github.com/gogo/protobuf/proto"
 	"gorm.io/gorm"
 )
 
@@ -91,6 +92,10 @@ func (p *Player) GetLastActiveTime() time.Time {
 	return p.lastActiveTime
 }
 
+func (p *Player) GetConnection() vnet.IConnection {
+	return p.connection
+}
+
 func (p *Player) Cancel() {
 	p.cancel()
 }
@@ -117,4 +122,13 @@ func (p *Player) CheckRoleMails() {
 		}
 		p.MailRecord.Add(mail)
 	}
+}
+
+func (p *Player) SendMessageToClient(msgId rpc.MsgId, req proto.Message) {
+	message := &vnet.Message{
+		MsgId: uint32(msgId),
+	}
+	data, _ := proto.Marshal(req)
+	message.SetData(data)
+	p.connection.SendMsg(message)
 }

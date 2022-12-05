@@ -44,6 +44,7 @@ message EMail {
   enum Status {
     StatusNotRead = 0;
     StatusReceiveReward = 1;
+    StatusDeleted = 2;
   }
   enum ReceiveType {
     ReceiveTypeSingle = 0;
