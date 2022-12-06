@@ -26,6 +26,7 @@ type Player struct {
 	curTime        time.Time
 	lastActiveTime time.Time
 	connection     vnet.IConnection
+	ItemRecord     *model.ItemRecord
 	MailRecord     *model.MailRecord
 }
 
@@ -63,12 +64,17 @@ func (p *Player) LoadData() (bool, error) {
 }
 
 func (p *Player) LoadRecord(playerData *model.PlayerData) error {
+	itemRecord := model.NewItemRecord()
+	if err := itemRecord.Unmarshal(playerData.ItemData); err != nil {
+		return err
+	}
+	p.ItemRecord = itemRecord
+
 	mailRecord := model.NewMailRecord()
 	if err := mailRecord.Unmarshal(playerData.MailData); err != nil {
 		return err
 	}
 	p.MailRecord = mailRecord
-
 	return nil
 }
 

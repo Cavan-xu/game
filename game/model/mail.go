@@ -60,7 +60,6 @@ func (record *MailRecord) ReceiveSingleReward(mailId int64) ([]int64, []*rpc.Ite
 	if mail == nil || mail.Status == rpc.EMail_StatusReceiveReward {
 		return nil, nil
 	}
-
 	mail.Status = rpc.EMail_StatusReceiveReward
 	record.SetDirty(true)
 	return []int64{mailId}, mail.ItemInfos
@@ -71,7 +70,6 @@ func (record *MailRecord) ReceiveAllReward() ([]int64, []*rpc.ItemInfo) {
 		mailIds   []int64
 		itemInfos []*rpc.ItemInfo
 	)
-
 	for _, mail := range record.MailInfos {
 		if mail.Status == rpc.EMail_StatusReceiveReward {
 			continue
@@ -83,6 +81,5 @@ func (record *MailRecord) ReceiveAllReward() ([]int64, []*rpc.ItemInfo) {
 	if len(mailIds) > 0 {
 		record.SetDirty(true)
 	}
-
 	return mailIds, itemInfos
 }

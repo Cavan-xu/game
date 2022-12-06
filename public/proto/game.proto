@@ -40,6 +40,10 @@ message ItemInfo {
   int64 ReceiveTime = 3;
 }
 
+message ItemData {
+  repeated ItemInfo ItemInfos = 1;
+}
+
 message EMail {
   enum Status {
     StatusNotRead = 0;

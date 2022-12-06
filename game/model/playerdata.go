@@ -13,6 +13,7 @@ type PlayerData struct {
 	Account  string `xorm:"not null varchar(50)"`
 	Name     string `xorm:"not null varchar(30)"`
 	Gender   int32  `xorm:"not null int(1)"`
+	ItemData []byte `xorm:"blob"`
 	MailData []byte `xorm:"blob"`
 }
 
