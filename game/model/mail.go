@@ -83,3 +83,7 @@ func (record *MailRecord) ReceiveAllReward() ([]int64, []*rpc.ItemInfo) {
 	}
 	return mailIds, itemInfos
 }
+
+func (record *MailRecord) RemoveReadMails() []int64 {
+	return nil
+}

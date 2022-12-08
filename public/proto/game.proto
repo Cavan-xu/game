@@ -3,7 +3,7 @@ syntax = "proto3";
 import "common.proto";
 
 package rpc;
-option go_package = "rpc/";
+option go_package = "rpc";
 
 message FailAck {
   ResultId ResultId = 1;
@@ -43,6 +43,9 @@ message ItemInfo {
 message ItemData {
   repeated ItemInfo ItemInfos = 1;
 }
+/*
+  邮件
+ */
 
 message EMail {
   enum Status {

@@ -54,6 +54,31 @@ func (r *MailRouter) Handle(request vnet.IRequest) {
 	}
 }
 
+type DeleteMailRouter struct {
+	BaseRouter
+}
+
+func (r *DeleteMailRouter) Handle(request vnet.IRequest) {
+	req := &rpc.CommonReq{}
+	if err := proto.Unmarshal(request.GetMessage().GetData(), req); err != nil {
+		request.GetServer().LogErr("protoId: %d proto Unmarshal data err: %v", request.GetMsgId(), err)
+		return
+	}
+
+	p := service.GetPlayer(req.RoleId)
+	if p == nil {
+		return
+	}
+
+	mailIds := p.MailRecord.RemoveReadMails()
+	ack := &rpc.CommonAck{
+		ResultId: rpc.ResultId_Success,
+	}
+	r.SendMsgToClient(request, ack)
+
+	NotifyRoleMails(p, mailIds)
+}
+
 func NotifyRoleMails(p *service.Player, mailIds []int64) {
 	ntf := &rpc.RoleMailNtf{
 		RoleId: p.GetRoleId(),

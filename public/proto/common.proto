@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package rpc;
-option go_package = "rpc/";
+option go_package = "rpc";
 
 enum MsgId {
   Invalid = 0;
@@ -26,4 +26,13 @@ enum ResultId {
   Fail = 5;           // 请求失败
   ViolateWord = 6;    // 违规词语
   SystemBusy = 7;     // 系统忙
+}
+
+message CommonReq {
+  int32 RoleId = 1;
+}
+
+message CommonAck {
+    ResultId ResultId = 1;
+    string ErrMsg = 2;
 }
